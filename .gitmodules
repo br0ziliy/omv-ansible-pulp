@@ -1,0 +1,15 @@
+[submodule "roles/ansible-pulp"]
+	path = roles/ansible-pulp
+	url = https://github.com/picotrading/ansible-pulp.git
+[submodule "roles/ansible-qpid_cpp_server"]
+	path = roles/ansible-qpid_cpp_server
+	url = https://github.com/picotrading/ansible-qpid_cpp_server
+[submodule "roles/ansible-mongodb"]
+	path = roles/ansible-mongodb
+	url = https://github.com/picotrading/ansible-mongodb
+[submodule "templates/encoder"]
+	path = templates/encoder
+	url = https://github.com/picotrading/config-encoder-macros
+[submodule "roles/ansible-yumrepo"]
+	path = roles/ansible-yumrepo
+	url = https://github.com/picotrading/ansible-yumrepo
