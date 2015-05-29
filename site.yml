@@ -1,4 +1,10 @@
 ---
+- name: Gather facts from all hosts
+  hosts: all
+  tasks:
+    - fail: msg=""
+      when: false
+
 # Mongo DB server
 - hosts: pulp-mongodb
   roles:
