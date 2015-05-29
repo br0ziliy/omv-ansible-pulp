@@ -4,6 +4,7 @@
   tasks:
     - fail: msg=""
       when: false
+      delegate_to: 127.0.0.1
 
 # Mongo DB server
 - hosts: pulp-mongodb
