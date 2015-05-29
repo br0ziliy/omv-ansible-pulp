@@ -16,6 +16,7 @@
     # We can use the qpid role directly
     - role: qpid_cpp_server
       # Configure Qpid for multi-host setup
+      qpid_cpp_server_yum_repo_url: https://repos.fedorapeople.org/repos/pulp/pulp/stable/latest/fedora-$releasever/$basearch/
       qpid_cpp_server_qpidd_config:
         auth: no
 
