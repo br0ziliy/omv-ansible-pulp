@@ -24,6 +24,7 @@
 - hosts: pulp-server1
   roles:
     - role: pulp
+      pulp_yum_repo_url: https://repos.fedorapeople.org/repos/pulp/pulp/stable/latest/fedora-$releasever/$basearch/
       pulp_install_server: true
       # Only the first Pulp server will runt these two services
       pulp_run_celerybeat: true
@@ -40,6 +41,7 @@
   roles:
     - role: pulp
       pulp_install_server: true
+      pulp_yum_repo_url: https://repos.fedorapeople.org/repos/pulp/pulp/stable/latest/fedora-$releasever/$basearch/
       # Configure Pulp server for multi-host setup
       pulp_server_config:
         messaging: { uri: "tcp://{{ hostvars[groups['pulp_messaging'][0]]['ansible_default_ipv4']['address'] }}" }
@@ -52,6 +54,7 @@
   roles:
     - role: pulp
       pulp_install_admin: true
+      pulp_yum_repo_url: https://repos.fedorapeople.org/repos/pulp/pulp/stable/latest/fedora-$releasever/$basearch/
       # Configure Pulp admin for multi-host setup
       pulp_admin_config:
         server:
@@ -62,6 +65,7 @@
   roles:
     - role: pulp
       pulp_install_consumer: true
+      pulp_yum_repo_url: https://repos.fedorapeople.org/repos/pulp/pulp/stable/latest/fedora-$releasever/$basearch/
       # Configure Pulp consumer for multi-host setup
       pulp_consumer_config:
         server:
