@@ -31,7 +31,7 @@
       pulp_run_resource_manager: true
       # Configure Pulp server for multi-host setup
       pulp_server_config:
-        messaging: { uri: "tcp://{{ hostvars[groups['pulp_messaging'][0]]['ansible_default_ipv4']['address'] }}" }
+        pulp_messaging: { uri: "tcp://{{ hostvars[groups['pulp_messaging'][0]]['ansible_default_ipv4']['address'] }}" }
       # Configure repo_auth
       #pulp_server_repo_auth_config:
       #  ...
@@ -44,7 +44,7 @@
       pulp_yum_repo_url: https://repos.fedorapeople.org/repos/pulp/pulp/stable/latest/fedora-$releasever/$basearch/
       # Configure Pulp server for multi-host setup
       pulp_server_config:
-        messaging: { uri: "tcp://{{ hostvars[groups['pulp_messaging'][0]]['ansible_default_ipv4']['address'] }}" }
+        pulp_messaging: { uri: "tcp://{{ hostvars[groups['pulp_messaging'][0]]['ansible_default_ipv4']['address'] }}" }
       # Configure repo_auth
       #pulp_server_repo_auth_config:
       #  ...
