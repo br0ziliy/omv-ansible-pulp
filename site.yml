@@ -1,0 +1,68 @@
+---
+# Mongo DB server
+- hosts: pulp-mongodb
+  roles:
+    - role: mongodb
+      mongodb_net_bindIp: 0.0.0.0
+      mongodb_net_wireObjectCheck: false
+      mongodb_net_unixDomainSocket_enabled: true
+      mongodb_processManagement_fork: true
+      mongodb_systemLog_logAppend: true
+      mongodb_systemLog_timeStampFormat: iso8601-utc
+
+# Messaging server
+- hosts: pulp-messaging
+  roles:
+    # We can use the qpid role directly
+    - role: qpid_cpp_server
+      # Configure Qpid for multi-host setup
+      qpid_cpp_server_qpidd_config:
+        auth: no
+
+# First Pulp server
+- hosts: pulp-server1
+  roles:
+    - role: pulp
+      pulp_install_server: true
+      # Only the first Pulp server will runt these two services
+      pulp_run_celerybeat: true
+      pulp_run_resource_manager: true
+      # Configure Pulp server for multi-host setup
+      pulp_server_config:
+        messaging: { uri: "tcp://{{ hostvars[groups['pulp_messaging'][0]]['ansible_default_ipv4']['address'] }}" }
+      # Configure repo_auth
+      #pulp_server_repo_auth_config:
+      #  ...
+
+# Second Pulp server
+- hosts: pulp-server2
+  roles:
+    - role: pulp
+      pulp_install_server: true
+      # Configure Pulp server for multi-host setup
+      pulp_server_config:
+        messaging: { uri: "tcp://{{ hostvars[groups['pulp_messaging'][0]]['ansible_default_ipv4']['address'] }}" }
+      # Configure repo_auth
+      #pulp_server_repo_auth_config:
+      #  ...
+
+# Pulp admin
+- hosts: pulp-admin
+  roles:
+    - role: pulp
+      pulp_install_admin: true
+      # Configure Pulp admin for multi-host setup
+      pulp_admin_config:
+        server:
+          host: "{{ hostvars[groups['pulp-server1'][0]]['ansible_fqdn'] }}"
+
+# Pulp customer
+- hosts: pulp-consumer
+  roles:
+    - role: pulp
+      pulp_install_consumer: true
+      # Configure Pulp consumer for multi-host setup
+      pulp_consumer_config:
+        server:
+          host: "{{ hostvars[groups['pulp-server1'][0]]['ansible_fqdn'] }}"
+
